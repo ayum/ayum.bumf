@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>{{title}}</title>
+    <style>
+        body {
+            string-set: title "{{short_title}}",
+            title-slug "{{title_slug}}",
+            modification-date "{{date}}";
+        }
+    
+        header address a {
+            string-set: author content(text);
+        }
+    </style>
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body>
+    <header>
+        {{#if title}}<h1>{{title}}</h1>{{/if}}
+        {{#if author}}{{#if author.name}}
+        <address>
+            <a href="{{author.name}}" rel="author">{{{marked author.name}}}</a>
+        </address>
+        {{/if}}{{/if}}
+        {{#if summary}}
+        <section>
+            {{#each summary}}
+            <p>{{{marked this}}}</p>
+            {{/each}}
+        </section>
+        {{/if}}
+    </header>
+    <main>
+        {{#each body}}
+        <p>{{{marked this}}}</p>
+        {{/each}}
+    </main>
+    <footer>
+        {{#if publication_date}}
+        <time datetime="{{publication_date}}">{{dateFormat publication_date}}</time>
+        {{/if}}
+        {{#if author}}{{#if author.name}}
+        <address>
+            <a href="{{author.link}}" rel="author">{{{marked author.name}}}</a>
+        </address>
+        {{/if}}{{/if}}
+    </footer>
+</body>
+
+</html>
