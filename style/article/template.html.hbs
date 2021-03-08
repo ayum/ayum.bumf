@@ -7,11 +7,10 @@
         body {
             string-set: title "{{short_title}}",
             title-slug "{{title_slug}}",
-            modification-date "{{date}}";
-        }
-    
-        header address a {
-            string-set: author content(text);
+            modification-date "{{date}}",
+            publication-date "{{dateFormat publication_date}}",
+            publication-year "{{dateYear publication_date}}",
+            author "{{{marked author.name}}}";
         }
     </style>
     <link rel="stylesheet" href="fonts/fonts.css">
@@ -23,8 +22,11 @@
         {{#if title}}<h1>{{title}}</h1>{{/if}}
         {{#if author}}{{#if author.name}}
         <address>
-            <a href="{{author.name}}" rel="author">{{{marked author.name}}}</a>
+            <a href="{{author.link}}" rel="author">{{{marked author.name}}}</a>
         </address>
+        {{#if publication_date}}
+        <time datetime="{{dateNormalize publication_date}}">{{dateFormat publication_date}}</time>
+        {{/if}}
         {{/if}}{{/if}}
         {{#if summary}}
         <section>
@@ -41,7 +43,7 @@
     </main>
     <footer>
         {{#if publication_date}}
-        <time datetime="{{publication_date}}">{{dateFormat publication_date}}</time>
+        <time datetime="{{dateNormalize publication_date}}">{{dateFormat publication_date}}</time>
         {{/if}}
         {{#if author}}{{#if author.name}}
         <address>

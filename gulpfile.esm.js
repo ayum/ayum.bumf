@@ -99,8 +99,20 @@ function transform_text(node, f) {
     }
   }
 }
+function date_normalize(str) {
+  if (date.isValid(str, 'DD.MM.YYYY')) {
+    str = date.transform(str, 'DD.MM.YYYY', 'YYYY-MM-DD');
+  } else if (date.isValid(str, 'D.MM.YYYY')) {
+    str = date.transform(str, 'D.MM.YYYY', 'YYYY-MM-DD');
+  } else if (date.isValid(str, 'DD.M.YYYY')) {
+    str = date.transform(str, 'DD.M.YYYY', 'YYYY-MM-DD');
+  } else if (date.isValid(str, 'D.M.YYYY')) {
+    str = date.transform(str, 'D.M.YYYY', 'YYYY-MM-DD');
+  }
+  return date.format(new Date(str), 'YYYY-MM-DD').toLocaleLowerCase();;
+}
 marked.Renderer.prototype.paragraph = function (text) {
-  return text + '\n';
+  return text;
 };
 marked.setOptions({ xhtml: true, smartypants: true });
 const html_task = async () => {
@@ -109,14 +121,13 @@ const html_task = async () => {
       .data(JSON.parse(fs.readFileSync(build_dir + '/' + style + '.json')))
       .helpers({
         dateFormat: function (str) {
-          if (date.isValid(str, 'DD.MM.YYYY')) {
-            str = date.transform(str, 'DD.MM.YYYY', 'YYYY-MM-DD');
-          } else if (date.isValid(str, 'D.MM.YYYY')) {
-            str = date.transform(str, 'D.MM.YYYY', 'YYYY-MM-DD');
-          } else if (date.isValid(str, 'DD.M.YYYY')) {
-            str = date.transform(str, 'DD.M.YYYY', 'YYYY-MM-DD');
-          }
-          return date.format(new Date(str), 'DD MMMM YYYY').toLocaleLowerCase();
+          return date.format(new Date(date_normalize(str)), 'DD MMMM YYYY').toLocaleLowerCase();
+        },
+        dateYear: function (str) {
+          return date.format(new Date(date_normalize(str)), 'YYYY').toLocaleLowerCase();
+        },
+        dateNormalize: function (str) {
+          return date_normalize(str);
         },
         marked: function (str) {
           return marked(str);

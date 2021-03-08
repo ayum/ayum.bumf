@@ -7,13 +7,12 @@ $page-margin-left: $page-margin;
 $page-width: 210mm;
 $page-height: 297mm;
 $page-content-height: $page-height - $page-margin-top - $page-margin-bottom;
-// $page-header-height: $page-content-height - $page-margin-top;
 
 @page {
   size: $page-width $page-height; //A4
   margin: $page-margin $page-margin $page-margin $page-margin-left;
   @top-right {
-    content: string(title) '. — ' string(author);
+    content: string(title) '. — ' string(author) ', ' string(publication-year);
     font-style: italic;
   }
   @bottom-right-corner {
@@ -35,29 +34,28 @@ html {
   font-family: 'PT Serif', serif;
   font-size: 10pt;
   display: flex;
+  orphans: 1;
+  widows: 1;
 }
 
 header {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: center;
-  // height: $page-header-height;
+  font-style: italic;
   h1 {
     margin: 0mm;
     font-size: x-large;
+    font-style: normal;
   }
-  address {
+  address, time {
     text-align: right;
-  }
-  section {
-    font-style: italic;
   }
 }
 
 main {
-  // break-before: page;
-  margin-top: 3rem;
+  break-before: avoid;
+  margin-top: 2rem;
 }
 
 h2 {
