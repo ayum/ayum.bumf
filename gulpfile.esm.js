@@ -121,7 +121,7 @@ const html_task = async () => {
       .data(JSON.parse(fs.readFileSync(build_dir + '/' + style + '.json')))
       .helpers({
         dateFormat: function (str) {
-          return date.format(new Date(date_normalize(str)), 'DD MMMM YYYY').toLocaleLowerCase();
+          return date.format(new Date(date_normalize(str)), 'D MMMM YYYY').toLocaleLowerCase();
         },
         dateYear: function (str) {
           return date.format(new Date(date_normalize(str)), 'YYYY').toLocaleLowerCase();

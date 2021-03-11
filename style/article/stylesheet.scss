@@ -66,11 +66,15 @@ h2 {
   break-inside: avoid;
 }
 
-p {
+ul {
+  padding-left: 2rem;
+}
+
+p, li {
   hyphens: manual;
+  text-align: justify;
   code {
     font-family: 'PT Mono', monospace;
-    padding: 0 0.5em 0 0;
   }
 }
 
