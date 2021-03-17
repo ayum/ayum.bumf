@@ -15,6 +15,9 @@ $page-content-height: $page-height - $page-margin-top - $page-margin-bottom;
     content: string(title) '. — ' string(author) ', ' string(publication-year);
     font-style: italic;
   }
+  @top-left {
+    content: url(assets/ayum.svg);
+  }
   @bottom-right-corner {
     content: counter(page) ' из ' counter(pages);
   }

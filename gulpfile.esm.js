@@ -27,6 +27,7 @@ const ggf = new GetGoogleFonts({ userAgent: 'Wget/1.18' });
 const hypher = new Hypher(russian);
 var build_dir;
 var fonts_dir;
+var assets_dir;
 var paper;
 var style;
 var paper_path;
@@ -41,6 +42,7 @@ const argv_task = async () => {
   paper = path.basename(_.dir);
   build_dir = 'build/' + paper + '/';
   fonts_dir = build_dir + '/fonts/';
+  assets_dir = build_dir + '/assets/';
 }
 
 const dirs_task = async () => {
@@ -50,11 +52,28 @@ const dirs_task = async () => {
     await fs.promises.mkdir(fonts_dir, { recursive: true });
   }
 
-  const dir = 'style/' + style + '/fonts/';
+  try {
+    await fs.promises.access(assets_dir, fs.constants.F_OK);
+  } catch (_) {
+    await fs.promises.mkdir(assets_dir, { recursive: true });
+  }
+
+  var dir = 'style/' + style + '/fonts/';
   try {
     await fs.promises.access(dir, fs.constants.F_OK);
     try {
       await fse.copy(dir, fonts_dir);
+    } catch (err) {
+      console.log(err);
+      process.abort();
+    }
+  } catch (_) { }
+
+  dir = 'style/' + style + '/assets/';
+  try {
+    await fs.promises.access(dir, fs.constants.F_OK);
+    try {
+      await fse.copy(dir, assets_dir);
     } catch (err) {
       console.log(err);
       process.abort();
