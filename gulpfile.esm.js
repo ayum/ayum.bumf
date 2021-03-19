@@ -79,6 +79,10 @@ const dirs_task = async () => {
       process.abort();
     }
   } catch (_) { }
+
+  await gulp.src(paper_path)
+    .pipe(gulp_rename(paper + '.txt'))
+    .pipe(gulp.dest(build_dir));
 }
 
 const fonts_task = async () => {
@@ -106,7 +110,7 @@ const ppcat_task = async () => {
 
 const data_task = async () => {
   const text = await fs.promises.readFile(paper_path);
-  await fs.promises.writeFile(build_dir + '/' + style + '.json', JSON.stringify(pick(text.toString()), null, ' '));
+  await fs.promises.writeFile(build_dir + '/' + paper + '.json', JSON.stringify(pick(text.toString()), null, ' '));
 }
 
 function transform_text(node, f) {
@@ -137,7 +141,7 @@ marked.setOptions({ xhtml: true, smartypants: true });
 const html_task = async () => {
   await gulp.src('style/' + style + '/template.html.hbs')
     .pipe(gulp_hb()
-      .data(JSON.parse(fs.readFileSync(build_dir + '/' + style + '.json')))
+      .data(JSON.parse(fs.readFileSync(build_dir + '/' + paper + '.json')))
       .helpers({
         dateFormat: function (str) {
           return date.format(new Date(date_normalize(str)), 'D MMMM YYYY').toLocaleLowerCase();
@@ -166,7 +170,7 @@ const html_task = async () => {
       cb(null, file);
     }))
     .pipe(gulp_beautify())
-    .pipe(gulp_rename(style + '.html'))
+    .pipe(gulp_rename(paper + '.html'))
     .pipe(gulp.dest(build_dir));
 };
 

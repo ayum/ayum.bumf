@@ -5,7 +5,7 @@ from weasyprint import HTML, CSS
 from weasyprint.fonts import FontConfiguration
 
 paper_path = 'sobraniya/article.txt'
-paper_html = 'build/sobraniya/article.html'
+paper_html = 'build/sobraniya/sobraniya.html'
 
 
 @task
@@ -16,8 +16,10 @@ def gulp(ctx, paper_path=paper_path):
 
 
 @task
-def bumf(ctx, paper_html=paper_html, paper_path=paper_path):
-    paper_path = path(paper_path).resolve()
+def bumf(ctx, paper_html=paper_html):
     paper_html = path(paper_html).resolve()
     paper_pdf = path(paper_html).with_suffix('.pdf')
-    ctx.run(f'weasyprint -e=utf8 -a={paper_path} -v {paper_html} {paper_pdf}')
+    paper_txt = path(paper_html).with_suffix('.txt')
+    cmd = f'weasyprint -e=utf8 -a={paper_txt} -v {paper_html} {paper_pdf}'
+    print(f'invoke: {cmd}')
+    ctx.run(cmd)

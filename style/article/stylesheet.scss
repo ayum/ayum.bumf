@@ -79,6 +79,10 @@ p, li {
   code {
     font-family: 'PT Mono', monospace;
   }
+  b {
+    bookmark-level: 2;
+    bookmark-label: content(text);
+  }
 }
 
 hr {
