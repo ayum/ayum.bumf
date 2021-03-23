@@ -10,5 +10,5 @@ pycparser==2.20
 Pyphen==0.10.0
 six==1.15.0
 tinycss2==1.1.0
-WeasyPrint==52.3
+WeasyPrint==52.4
 webencodings==0.5.1

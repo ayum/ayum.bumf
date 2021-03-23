@@ -36,29 +36,39 @@ $page-content-height: $page-height - $page-margin-top - $page-margin-bottom;
 html {
   font-family: 'PT Serif', serif;
   font-size: 10pt;
-  display: flex;
-  orphans: 1;
-  widows: 1;
 }
 
-header {
+header, footer {
+  address, time {
+    text-align: right;
+  }
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-style: italic;
+  break-before: avoid;
+}
+
+header {
+  margin-bottom: 1rem;
   h1 {
-    margin: 0mm;
+    margin: 0;
     font-size: x-large;
     font-style: normal;
   }
-  address, time {
-    text-align: right;
+  section {
+    margin-top: 1rem;
   }
+}
+
+footer {
+  margin-top: 1rem;
+  hyphens: none;
 }
 
 main {
   break-before: avoid;
-  margin-top: 2rem;
+  column-count: 2;
 }
 
 h2 {
@@ -70,18 +80,27 @@ h2 {
 }
 
 ul {
-  padding-left: 2rem;
+  padding-left: 1em;
+  margin: 0;
+}
+
+p {
+  text-indent: 1em;
+  &:first-child {
+    margin-top: 0;
+  }
+  b:first-child {
+    bookmark-level: 2;
+    bookmark-label: content(text);
+  }
 }
 
 p, li {
+  margin: 0;
   hyphens: manual;
   text-align: justify;
   code {
     font-family: 'PT Mono', monospace;
-  }
-  b {
-    bookmark-level: 2;
-    bookmark-label: content(text);
   }
 }
 
@@ -90,21 +109,6 @@ hr {
   border: none;
   &::after {
     content: '* * *';
-  }
-}
-
-footer {
-  margin-top: 5rem;
-  break-before: avoid;
-  hyphens: none;
-  font-style: italic;
-  display: flex;
-  time {
-    flex: 1;
-  }
-  address {
-    break-inside: avoid;
-    text-align: right;
   }
 }
 
