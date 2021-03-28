@@ -143,3 +143,8 @@ cython_debug/
 /build
 /.gulp-scss-cache
 /.sass-cache
+
+# My
+.default_paper_path
+/private
+/sandpit
