@@ -1,8 +1,6 @@
 import os
 from invoke import task
 from pathlib import Path
-from weasyprint import HTML, CSS
-from weasyprint.fonts import FontConfiguration
 
 
 def paper_files(paper):
