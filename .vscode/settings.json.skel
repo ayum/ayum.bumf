@@ -1,5 +1,9 @@
 {
     "editor.wordWrap": "on",
+    "terminal.integrated.shellArgs.linux": [
+        "--init-file",
+        "${workspaceFolder}/.vscode/shell_init_script.bash"
+    ],
     "terminal.integrated.env.linux": {
         "PATH": "${workspaceFolder}/node_modules/.bin:${env:PATH}"
     }
