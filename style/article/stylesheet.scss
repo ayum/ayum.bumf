@@ -1,4 +1,6 @@
-@use '../common/page';
+@use '../common/page' with (
+  $margin: 20mm
+);
 @use '../common/font';
 @use '../common/common';
 

@@ -182,6 +182,9 @@ const html_task = async () => {
         dateFormat: function (str) {
           return date.format(new Date(date_normalize(str)), 'D MMMM YYYY').toLocaleLowerCase();
         },
+        dateFormatShort: function (str) {
+          return date.format(new Date(date_normalize(str)), 'DD.MM.YYYY').toLocaleLowerCase();
+        },
         dateYear: function (str) {
           return date.format(new Date(date_normalize(str)), 'YYYY').toLocaleLowerCase();
         },

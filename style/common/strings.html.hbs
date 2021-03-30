@@ -1,12 +1,41 @@
 <style>
     html {
-        string-set: title-short "{{short_title}}",
-        title-slug "{{title_slug}}",
-        modification-date "{{date}}",
-        publication-date "{{dateFormat publication_date}}",
-        publication-year "{{dateYear publication_date}}",
-        author {{#if author}}"{{{marked author.name}}}"{{/if}},
-        document-version "{{git_commit}}",
-        top-right {{#if short_title}}'{{short_title}}. — '{{else}}'{{capitalize type}}. — '{{/if}} {{#if author}}'{{{marked author.name}}}'{{/if}} {{#if publication_date}}', {{dateYear publication_date}}'{{else}}{{#if date}}', {{dateFormat date}}'{{/if}}{{/if}};
+        string-set:
+        top-right
+        {{#if top_right}}
+            '{{top_right}}'
+        {{else}}
+            {{#if short_title}}
+                '{{short_title}}. — '
+            {{else}}
+                {{#if type}}
+                    '{{capitalize type}}. — '
+                {{/if}}
+            {{/if}}
+            {{#if author}}
+                '{{{marked author.name}}}'
+            {{/if}}
+            {{#if top_right_date}}
+                ', {{top_right_date}}'
+            {{/if}}
+        {{/if}},
+        bottom-left
+        {{#if bottom_left}}
+            '{{bottom_left}}'
+        {{else}}
+            'Издание: аюм/'
+            {{#if title_slug}}
+                '{{title_slug}}'
+            {{/if}}
+            '/'
+            {{#if publication_date}}
+                '{{dateFormatShort publication_date}}'
+            {{else}}
+                {{#if date}}
+                    '{{dateFormatShort date}}'
+                {{/if}}
+            {{/if}}
+            '/' '{{git_commit}}'
+        {{/if}};
     }
 </style>

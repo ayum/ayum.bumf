@@ -20,7 +20,7 @@ $height: 297mm;
       content: counter(page) ' из ' counter(pages);
     }
     @bottom-left {
-      content: 'Издание: аюм/' string(title-slug) '/' string(modification-date) '/' string(document-version);
+      content: string(bottom-left);
       font-style: italic;
     }
   }
