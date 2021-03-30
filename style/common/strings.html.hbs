@@ -1,11 +1,12 @@
 <style>
     html {
-        string-set: title "{{short_title}}",
+        string-set: title-short "{{short_title}}",
         title-slug "{{title_slug}}",
         modification-date "{{date}}",
         publication-date "{{dateFormat publication_date}}",
         publication-year "{{dateYear publication_date}}",
-        author "{{{marked author.name}}}",
-        document-version "{{git_commit}}";
+        author {{#if author}}"{{{marked author.name}}}"{{/if}},
+        document-version "{{git_commit}}",
+        top-right {{#if short_title}}'{{short_title}}. — '{{else}}'{{capitalize type}}. — '{{/if}} {{#if author}}'{{{marked author.name}}}'{{/if}} {{#if publication_date}}', {{dateYear publication_date}}'{{else}}{{#if date}}', {{dateFormat date}}'{{/if}}{{/if}};
     }
 </style>

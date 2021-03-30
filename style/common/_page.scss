@@ -10,7 +10,7 @@ $height: 297mm;
     size: $width $height; //A4
     margin: $margin-top $margin-right $margin-bottom $margin-left;
     @top-right {
-      content: string(title) '. — ' string(author) ', ' string(publication-year);
+      content: string(top-right);
       font-style: italic;
     }
     @top-left {

@@ -193,6 +193,9 @@ const html_task = async () => {
         },
         eq: function (lhs, rhs) {
           return lhs == rhs;
+        },
+        capitalize: function ([first, ...rest]) {
+          return first.toLocaleUpperCase('ru-RU') + rest.join('')
         }
       })
     )
