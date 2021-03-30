@@ -11,9 +11,6 @@
 <body>
     <header>
         {{#if title}}<h1>{{title}}</h1>{{/if}}
-        {{> author.html }}
-        {{> date.html }}
-        {{> summary.html }}
     </header>
     <main>
         {{#each body}}
@@ -21,7 +18,8 @@
         {{/each}}
     </main>
     <footer>
-        <hr>
+        {{> author.html }}
+        {{> date.html }}
     </footer>
 </body>
 

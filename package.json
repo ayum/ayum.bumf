@@ -19,11 +19,12 @@
     "gulp-sass": "^4.0.2",
     "gulp-serve": "^1.4.0",
     "handlebars": "^4.7.7",
-    "hypher": "^0.2.5",
     "hyphenation.ru": "^0.2.1",
+    "hypher": "^0.2.5",
     "jsdom": "^16.4.0",
     "marked": "^2.0.1",
     "pdf-lib": "^1.16.0",
+    "sass": "^1.32.8",
     "through2": "^4.0.2"
   },
   "scripts": {

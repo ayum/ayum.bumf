@@ -1,0 +1,32 @@
+$margin: 25mm !default;
+$margin-top: $margin !default;
+$margin-right: $margin !default;
+$margin-bottom: $margin !default;
+$margin-left: $margin !default;
+$width: 210mm;
+$height: 297mm;
+
+@page {
+    size: $width $height; //A4
+    margin: $margin-top $margin-right $margin-bottom $margin-left;
+    @top-right {
+      content: string(title) '. — ' string(author) ', ' string(publication-year);
+      font-style: italic;
+    }
+    @top-left {
+      content: url(assets/ayum.svg);
+    }
+    @bottom-right-corner {
+      content: counter(page) ' из ' counter(pages);
+    }
+    @bottom-left {
+      content: 'Издание: аюм/' string(title-slug) '/' string(modification-date) '/' string(document-version);
+      font-style: italic;
+    }
+  }
+
+  @page :first {
+    @top-right {
+      content: "";
+    }
+  }

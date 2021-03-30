@@ -2,7 +2,6 @@ import gulp from 'gulp'
 import gulp_hb from 'gulp-hb'
 import gulp_beautify from 'gulp-jsbeautifier'
 import gulp_sass from 'gulp-sass'
-import gulp_header from 'gulp-header'
 import gulp_serve from 'gulp-serve'
 import gulp_rename from 'gulp-rename'
 import fs from 'fs'
@@ -21,8 +20,10 @@ import ru from 'date-and-time/locale/ru'
 import child_process from 'child_process'
 import { argv } from 'yargs'
 import marked from 'marked'
+import sass from 'sass'
 
 date.locale(ru);
+gulp_sass.compiler = sass;
 const ggf = new GetGoogleFonts({ userAgent: 'Wget/1.18' });
 const hypher = new Hypher(russian);
 var build_dir;
@@ -58,7 +59,20 @@ const dirs_task = async () => {
     await fs.promises.mkdir(assets_dir, { recursive: true });
   }
 
-  var dir = 'style/' + style + '/fonts/';
+  var dir;
+
+  dir = 'style/' + style + '/fonts/';
+  try {
+    await fs.promises.access(dir, fs.constants.F_OK);
+    try {
+      await fse.copy(dir, fonts_dir);
+    } catch (err) {
+      console.log(err);
+      process.abort();
+    }
+  } catch (_) { }
+
+  dir = 'style/common/fonts/';
   try {
     await fs.promises.access(dir, fs.constants.F_OK);
     try {
@@ -80,13 +94,24 @@ const dirs_task = async () => {
     }
   } catch (_) { }
 
+  dir = 'style/common/assets/';
+  try {
+    await fs.promises.access(dir, fs.constants.F_OK);
+    try {
+      await fse.copy(dir, assets_dir);
+    } catch (err) {
+      console.log(err);
+      process.abort();
+    }
+  } catch (_) { }
+
   await gulp.src(paper_path)
     .pipe(gulp_rename(paper + '.txt'))
     .pipe(gulp.dest(build_dir));
 }
 
 const fonts_task = async () => {
-  const fonts_css = fonts_dir + '/fonts.css';
+  const fonts_css = fonts_dir + '/PT_fonts.css';
   try {
     await fs.promises.access(fonts_css, fs.constants.F_OK);
   } catch (_) {
@@ -139,9 +164,20 @@ marked.Renderer.prototype.paragraph = function (text) {
 };
 marked.setOptions({ xhtml: true, smartypants: true });
 const html_task = async () => {
+  const git_status = await child_process.exec('git status --short');
+  var git_commit;
+  if (git_status.toString()) {
+    git_commit = 'недействительно';
+  } else {
+    git_commit = await child_process.exec('git rev-parse HEAD').toString().trim().substring(0, 5);
+  }
   await gulp.src('style/' + style + '/template.html.hbs')
     .pipe(gulp_hb()
       .data(JSON.parse(fs.readFileSync(build_dir + '/' + paper + '.json')))
+      .data({
+        git_commit: git_commit,
+      })
+      .partials('style/common/*.hbs')
       .helpers({
         dateFormat: function (str) {
           return date.format(new Date(date_normalize(str)), 'D MMMM YYYY').toLocaleLowerCase();
@@ -175,15 +211,7 @@ const html_task = async () => {
 };
 
 const css_task = async () => {
-  await gulp.src('style/' + style + '/stylesheet.scss')
-    .pipe(gulp_header(function () {
-      if (child_process.execSync('git status --short').toString()) {
-        return '';
-      } else {
-        return '$document-version: \'' + child_process.execSync('git rev-parse HEAD').toString().trim().substring(0, 5) + '\';\n'
-      }
-    }()
-    ))
+  await gulp.src('style/' + style + '/**/*.scss')
     .pipe(gulp_sass())
     .pipe(gulp.dest(build_dir));
 }

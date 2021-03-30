@@ -1,0 +1,72 @@
+header, footer {
+  address, time {
+    text-align: right;
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-style: italic;
+  break-before: avoid;
+}
+
+header {
+  margin-bottom: 1rem;
+  h1 {
+    margin: 0;
+    font-size: x-large;
+    font-style: normal;
+  }
+  section {
+    margin-top: 1rem;
+  }
+}
+
+footer {
+  margin-top: 1rem;
+  hyphens: none;
+}
+
+h2 {
+  font-size: larger;
+  font-weight: bolder;
+  hyphens: none;
+  break-after: avoid;
+  break-inside: avoid;
+}
+
+ul {
+  padding-left: 1em;
+  margin: 0;
+}
+
+p {
+  text-indent: 1em;
+  b:first-child {
+    bookmark-level: 3;
+    bookmark-label: content(text);
+  }
+}
+
+p, li {
+  margin: 0;
+  hyphens: manual;
+  text-align: justify;
+
+}
+
+hr {
+  transform: rotate(-90deg);
+  break-before: avoid;
+  text-align: center;
+  border: none;
+  &::after {
+    content: '* * *';
+  }
+}
+
+@media print {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
