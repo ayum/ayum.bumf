@@ -1,3 +1,9 @@
 @use '../common/page';
 @use '../common/font';
 @use '../common/common';
+
+@page :first {
+  @top-right {
+    content: string(top-right);
+  }
+}

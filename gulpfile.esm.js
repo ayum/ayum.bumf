@@ -21,6 +21,7 @@ import child_process from 'child_process'
 import { argv } from 'yargs'
 import marked from 'marked'
 import sass from 'sass'
+import hash from 'object-hash'
 
 date.locale(ru);
 gulp_sass.compiler = sass;
@@ -167,15 +168,17 @@ const html_task = async () => {
   const git_status = await child_process.exec('git status --short');
   var git_commit;
   if (git_status.toString()) {
-    git_commit = 'недействительно';
+    git_commit = '';
   } else {
     git_commit = await child_process.exec('git rev-parse HEAD').toString().trim().substring(0, 5);
   }
+  const json = JSON.parse(await fs.promises.readFile(build_dir + '/' + paper + '.json'));
   await gulp.src('style/' + style + '/template.html.hbs')
     .pipe(gulp_hb()
-      .data(JSON.parse(fs.readFileSync(build_dir + '/' + paper + '.json')))
+      .data(json)
       .data({
         git_commit: git_commit,
+        json_hash: hash(json).substring(0, 5),
       })
       .partials('style/common/*.hbs')
       .helpers({

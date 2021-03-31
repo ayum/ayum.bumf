@@ -18,6 +18,7 @@
     <main>
         {{#each body}}
         <p>{{{marked this}}}</p>
+        {{#if @last}}<p style="text-align: right;">&#8718;</p>{{/if}}
         {{/each}}
     </main>
     <footer>

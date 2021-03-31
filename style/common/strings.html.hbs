@@ -35,7 +35,7 @@
                     '{{dateFormatShort date}}'
                 {{/if}}
             {{/if}}
-            '/' '{{git_commit}}'
+            '/' '{{json_hash}}-{{#if git_commit}}{{git_commit}}{{else}}недействительно{{/if}}'
         {{/if}};
     }
 </style>
